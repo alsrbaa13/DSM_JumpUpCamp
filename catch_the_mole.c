@@ -1,13 +1,7 @@
 /*
-* File        	: EX1_2.C
-* By          	: FunFun Yoo
-*
-* Description 	: Example for GPIO (LED, Tact Switch)
-*
-* Copyright(c) 2017 DrimAES Inc. All rights are reserved.
-*
-*
-* 2017.01.17	: Last modified
+* File        	: catch_the_mole
+* By          	: Lim MinGyu
+* 2017.08.03	: Last modified
 *
 ********************************************************************************
 */
@@ -17,7 +11,7 @@
 #include <stdio.h>
 #include <util/delay.h>
 
-#define DDR_SW DDRF
+#define DDR_SW DDRF 
 #define DDR_LED DDRB
 
 #define PORT_SW PORTF
@@ -73,11 +67,8 @@ ISR(INT3_vect)
 
 //initialize gpio
 void init_GPIO(){
-    DDR_SW = 0x00;
     DDR_LED = (1<< LED1) | (1<< LED2) | (1<<LED3) | (1<<LED4);
-    PORT_SW = 0xFF;
     PORT_LED = 0x00;
-    
 }
 //initialize interrupt
 void init_Interrupt(){
@@ -85,15 +76,13 @@ void init_Interrupt(){
     TCCR0A = (0 << WGM01) | (0<<WGM00);
     TCNT0 = 256- (CPU_CLOCK / TICKS_PER_SEC / 64);
     TIMSK0 = (0 << OCIE0B) | (0 << OCIE0A) | (1 << TOIE0);
-    EICRA = (1 << ISC01) | (0 << ISC00) | (1 << ISC11) | (0 << ISC10) |                 (1 << ISC21) | (0 << ISC20) | (1 << ISC31) | (0 << ISC30);
+    EICRA = (1 << ISC01) | (0 << ISC00) | (1 << ISC11) | (0 << ISC10) | (1 << ISC21) | (0 << ISC20) | (1 << ISC31) | (0 << ISC30);
     EIMSK = (1 << INT0) | (1 << INT1) | (1 << INT2) | (1 << INT3);
 }
 
 void GameStart(){
        LED_Num = (rand()%4)+4; // pick random number
-
        PORT_LED = (1 << LED_Num); // LED on
-    
 }
 
 
